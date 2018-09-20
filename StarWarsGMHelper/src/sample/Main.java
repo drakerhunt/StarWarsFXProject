@@ -18,7 +18,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        int width = 500;
+        int width = 700;
         int height = 450;
         double centerX = width / 3;
         double centerY = height / 3;
@@ -34,32 +34,78 @@ public class Main extends Application {
         VBox mainVB = new VBox(150);
         mainVB.setMaxSize(width, height);
 
-        HBox characterHB = new HBox(100);
-        characterHB.setStyle("-fx-padding: 10;" +
+        HBox characterHB = new HBox(10);
+        characterHB.setStyle("-fx-padding: 0;" +
                 "-fx-border-style: solid inside;" +
-                "-fx-padding: 10;" +
                 "-fx-border-width: 3;" +
-                "-fx-border-insets: 5;" +
+                "-fx-border-insets: 0;" +
                 "-fx-border-color: black;");
-        characterHB.setMaxWidth(500);
-        characterHB.setMaxHeight(450);
+        characterHB.setMaxWidth(width);
+        characterHB.setMaxHeight(height);
 
         //Character Buttons
-        Button char1, char2, char3, char4 = new Button("New Character");
-
-        //Stats Labels
+        Button char1Btn = new Button("New Character");
+        Button char2Btn = new Button("New Character");
+        Button char3Btn = new Button("New Character");
+        Button char4Btn = new Button("New Character");
+        
+        //Character panes
+        VBox charVB1 = new VBox();
+        VBox charVB2 = new VBox();
+        VBox charVB3 = new VBox();
+        VBox charVB4 = new VBox();
+        
+        //Set character pane borders
+        charVB1.setStyle("-fx-padding: 10;" +
+            "-fx-border-style: solid inside;" +
+            "-fx-padding: 10;" +
+            "-fx-border-width: 1;" +
+            "-fx-border-insets: 0;" +
+            "-fx-border-color: black;");
+        charVB2.setStyle("-fx-padding: 10;" +
+            "-fx-border-style: solid inside;" +
+            "-fx-padding: 10;" +
+            "-fx-border-width: 1;" +
+            "-fx-border-insets: 0;" +
+            "-fx-border-color: black;");
+        charVB3.setStyle("-fx-padding: 10;" +
+            "-fx-border-style: solid inside;" +
+            "-fx-padding: 10;" +
+            "-fx-border-width: 1;" +
+            "-fx-border-insets: 0;" +
+            "-fx-border-color: black;");
+        charVB4.setStyle("-fx-padding: 10;" +
+            "-fx-border-style: solid inside;" +
+            "-fx-padding: 10;" +
+            "-fx-border-width: 1;" +
+            "-fx-border-insets: 0;" +
+            "-fx-border-color: black;");
+        
+        //Character Labels
         Label charLabel1 = new Label("Empty");
         Label charLabel2 = new Label("Empty");
         Label charLabel3 = new Label("Empty");
         Label charLabel4 = new Label("Empty");
+        
+        //set character panes width
+        charVB1.setPrefWidth(width / 4);
+        charVB2.setPrefWidth(width / 4);
+        charVB3.setPrefWidth(width / 4);
+        charVB4.setPrefWidth(width / 4);
 
+        //Add character labels to character panes
+        charVB1.getChildren().addAll(charLabel1, char1Btn);
+        charVB2.getChildren().addAll(charLabel2, char2Btn);
+        charVB3.getChildren().addAll(charLabel3, char3Btn);
+        charVB4.getChildren().addAll(charLabel4, char4Btn);
+        
         //Adding nodes to panes and setting alignment
-        characterHB.getChildren().addAll(charLabel1, charLabel2, charLabel3, charLabel4);
+        characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);
 
         pane.setTop(titlePane);
         pane.setCenter(characterHB);
         characterHB.setAlignment(Pos.CENTER);
-       // mainVB.getChildren().addAll(titlePane, characterHB);
+        //mainVB.getChildren().addAll(titlePane, characterHB);
 
         //Set Scene
         Scene mainScene = new Scene(pane, width, height);
@@ -67,6 +113,13 @@ public class Main extends Application {
         primaryStage.setTitle("Star Wars GM Helper");
         primaryStage.setScene(mainScene);
         primaryStage.show();
+        
+        char1Btn.setOnAction(e -> {
+            Stage secondStage = new Stage();
+            secondStage.setTitle("NewCharacterWindow");
+            secondStage.setScene(NewCharacterWindow.secondScene);
+            stage.show();
+        });
     }
 
 
