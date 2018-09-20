@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+
 public class Main extends Application {
 
     @Override
@@ -109,16 +110,20 @@ public class Main extends Application {
 
         //Set Scene
         Scene mainScene = new Scene(pane, width, height);
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         primaryStage.setTitle("Star Wars GM Helper");
         primaryStage.setScene(mainScene);
         primaryStage.show();
         
         char1Btn.setOnAction(e -> {
-            Stage secondStage = new Stage();
-            secondStage.setTitle("NewCharacterWindow");
-            secondStage.setScene(NewCharacterWindow.secondScene);
-            stage.show();
+            NewCharacterWindow nCWindow = new NewCharacterWindow();
+            characterHB.getChildren().clear();
+            characterHB.getChildren().addAll(nCWindow);
+        });
+        char2Btn.setOnAction(e -> {
+            NewCharacterWindow nCWindow = new NewCharacterWindow();
+            charVB2.getChildren().clear();
+            charVB2.getChildren().addAll(nCWindow);
         });
     }
 

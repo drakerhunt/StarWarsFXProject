@@ -10,20 +10,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
+import java.io.*;
+import java.util.ArrayList;
 
 
-public class NewCharacterWindow extends Application {
-	
-	@Override
-	public void start(Stage secondStage) {
-			
+public class NewCharacterWindow extends Pane {
+
+	public NewCharacterWindow() {
 		//Create panes
 		VBox mainVB = new VBox();
-		HBox nameHB = new HBox();
-		HBox woundHB = new HBox();
-		HBox strainHB = new HBox();
-		HBox soakHB = new HBox();
-		HBox creditsHB = new HBox();
+		
+		//Create createButton
+		Button saveCharacterBtn = new Button("Save");
 		
 		//Create labels
 		Label nameLabel = new Label("Name: ");
@@ -40,8 +38,28 @@ public class NewCharacterWindow extends Application {
 		TextField creditsTF = new TextField("");
 		
 		//Add children to stats hboxes
-		nameHB.getChildren().addAll(nameLabel, nameTF);
+		mainVB.getChildren().addAll(nameLabel, nameTF, woundTLabel, woundTF, strainTLabel, strainTF, soakLabel, soakTF, creditsLabel, creditsTF, saveCharacterBtn);
+		mainVB.setMaxWidth(700 / 4 - 40);
+		this.getChildren().addAll(mainVB);
 		
-		Scene secondScene = new Scene(mainVB, 300, 400);
+		saveCharacterBtn.setOnAction(e -> {
+			String name = nameTF.getText();
+			int wound = Integer.parseInt(woundTF.getText());
+			int strain = Integer.parseInt(strainTF.getText());
+			int soak = Integer.parseInt(soakTF.getText());
+			double credits = Double.parseDouble(creditsTF.getText());
+			
+			ArrayList<Characters> characterList = new ArrayList<Characters>();
+			characterList.add(new Characters(name, wound, strain, soak, credits));
+			
+			File characterFile = new File("SavedCharacters.dat");
+			try {
+				ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(characterFile));
+				output.writeObject(characterFile);
+			}
+			catch (IOException ex) {
+				System.out.println("Did not save!");
+			}
+		});
 	}
 }
