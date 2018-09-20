@@ -3,6 +3,7 @@ package sample;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.io.*;
 
 
 public class Main extends Application {
@@ -20,7 +22,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         int width = 700;
-        int height = 450;
+        int height = 500;
         double centerX = width / 3;
         double centerY = height / 3;
 
@@ -43,12 +45,16 @@ public class Main extends Application {
                 "-fx-border-color: black;");
         characterHB.setMaxWidth(width);
         characterHB.setMaxHeight(height);
-
-        //Character Buttons
-        Button char1Btn = new Button("New Character");
-        Button char2Btn = new Button("New Character");
-        Button char3Btn = new Button("New Character");
-        Button char4Btn = new Button("New Character");
+        
+        HBox buttonHB = new HBox(5);
+        
+        //Buttons
+        Button newCharButton = new Button("New Character");
+        Button mainMenuBtn = new Button("Main Menu");
+        Button char1Btn = new Button("Select Character");
+        Button char2Btn = new Button("Select Character");
+        Button char3Btn = new Button("Select Character");
+        Button char4Btn = new Button("Select Character");
         
         //Character panes
         VBox charVB1 = new VBox();
@@ -102,9 +108,11 @@ public class Main extends Application {
         
         //Adding nodes to panes and setting alignment
         characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);
-
+        buttonHB.getChildren().addAll(newCharButton, mainMenuBtn);
         pane.setTop(titlePane);
         pane.setCenter(characterHB);
+        pane.setBottom(buttonHB);
+        pane.setMargin(buttonHB, new Insets(5, 5, 5, 5));
         characterHB.setAlignment(Pos.CENTER);
         //mainVB.getChildren().addAll(titlePane, characterHB);
 
@@ -115,15 +123,19 @@ public class Main extends Application {
         primaryStage.setScene(mainScene);
         primaryStage.show();
         
-        char1Btn.setOnAction(e -> {
+        newCharButton.setOnAction(e -> {
             NewCharacterWindow nCWindow = new NewCharacterWindow();
             characterHB.getChildren().clear();
             characterHB.getChildren().addAll(nCWindow);
         });
-        char2Btn.setOnAction(e -> {
-            NewCharacterWindow nCWindow = new NewCharacterWindow();
-            charVB2.getChildren().clear();
-            charVB2.getChildren().addAll(nCWindow);
+        mainMenuBtn.setOnAction(e -> {
+            characterHB.getChildren().clear();
+            characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);
+        });
+        char1Btn.setOnAction(e -> {
+            CharacterWindow cW = new CharacterWindow();
+            characterHB.getChildren().clear();
+            characterHB.getChildren().addAll(cW);
         });
     }
 

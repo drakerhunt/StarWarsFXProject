@@ -1,6 +1,8 @@
 package sample;
+import java.io.*;
 
-public class Characters {
+
+public class Characters implements Serializable {
     //Declare Variables
     String charName;
     private int wounds, strain, soak;
