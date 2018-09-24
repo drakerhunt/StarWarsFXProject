@@ -54,10 +54,10 @@ public class NewCharacterWindow extends Pane {
 			
 			File characterFile = new File("SavedCharacters.dat");
 			try {
-				if (!characterFile.exists()) {
+				//if (!characterFile.exists()) {
 					ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(characterFile));
 					output.writeObject(characterList);
-				}
+				//}
 			}
 			catch (IOException ex) {
 				System.out.println("Did not save!");

@@ -26,7 +26,9 @@ public class CharacterWindow extends Pane {
 			
 			ArrayList<Characters> characterList = new ArrayList<Characters>();
 			//while (true) {
-				characterList = (ArrayList<Characters>)input.readObject();
+				Characters charTemp = new Characters();
+				charTemp.equals(input.readObject());
+				characterList.add(charTemp);
 			//}
 			
 			int counter = 0;
