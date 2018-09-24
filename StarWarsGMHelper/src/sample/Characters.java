@@ -66,4 +66,13 @@ public class Characters implements Serializable {
     public double getCredits() {
         return credits;
     }
+    
+    @Override
+    public String toString() {
+        return ("Name: " + this.charName + 
+                "\nWound Threshold: " + this.wounds +
+                "\nStrain Threshold: " + this.strain +
+                "\nSoak: " + this.soak +
+                "\nCredits: " + this.credits);
+    }
 }

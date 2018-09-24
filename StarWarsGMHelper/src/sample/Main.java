@@ -133,9 +133,20 @@ public class Main extends Application {
             characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);
         });
         char1Btn.setOnAction(e -> {
-            CharacterWindow cW = new CharacterWindow();
-            characterHB.getChildren().clear();
-            characterHB.getChildren().addAll(cW);
+            try {
+                CharacterWindow cW = new CharacterWindow();
+                characterHB.getChildren().clear();
+                characterHB.getChildren().addAll(cW);
+            }
+            catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            /*catch (IOException ex) {
+                System.out.println("IOException");
+            }
+            catch (ClassNotFoundException exe) {
+                System.out.println("ClassNotFoundException");
+            }*/
         });
     }
 

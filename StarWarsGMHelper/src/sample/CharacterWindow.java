@@ -18,28 +18,32 @@ public class CharacterWindow extends Pane {
 	public CharacterWindow() throws IOException, ClassNotFoundException {
 		
 		GridPane charGP = new GridPane();
-		
-		File characterFile = new File("SavedCharacters.dat");
-		ObjectInputStream input = new ObjectInputStream(new FileInputStream(characterFile));
-		
-		ArrayList<Characters> characterList = new ArrayList<Characters>();
+		charGP.setGridLinesVisible(true);
 		
 		try {
-			while (true) {
-				characterList = (ArrayList)input.readObject();
+			File characterFile = new File("SavedCharacters.dat");
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream(characterFile));
+			
+			ArrayList<Characters> characterList = new ArrayList<Characters>();
+			//while (true) {
+				characterList = (ArrayList<Characters>)input.readObject();
+			//}
+			
+			int counter = 0;
+			Label gridLabel = new Label(""); 
+			for (int i = 0; i < characterList.size() / 3; i++) { 
+				for (int c = 0; c < 2; c++) {
+					String temp = characterList.get(counter).toString();
+					gridLabel.setText(temp);
+					charGP.getChildren().add(gridLabel);
+					charGP.setRowIndex(gridLabel, c);
+					charGP.setColumnIndex(gridLabel, i);
+					counter++;
+				}
 			}
 		}
 		catch (EOFException ex) {
-			
+			System.out.println("nope");
 		}
-		int counter = 0;
-		for (int i = 0; i < characterList.size() / 3; i++) { 
-			for (int c = 0; c < 3; c++) {
-				charGP.getChildren().add(new Label(characterList.get(counter)), c, i);
-				counter++;
-			}
-		}
-			
 	}
-	
 }
