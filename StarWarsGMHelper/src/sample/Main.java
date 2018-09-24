@@ -139,7 +139,7 @@ public class Main extends Application {
                 characterHB.getChildren().addAll(cW);
             }
             catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                System.out.println("Error: " + ex.getMessage());
             }
             /*catch (IOException ex) {
                 System.out.println("IOException");

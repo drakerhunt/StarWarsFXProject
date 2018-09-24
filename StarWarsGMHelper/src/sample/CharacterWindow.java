@@ -27,13 +27,14 @@ public class CharacterWindow extends Pane {
 			ArrayList<Characters> characterList = new ArrayList<Characters>();
 			//while (true) {
 				Characters charTemp = new Characters();
-				charTemp.equals(input.readObject());
-				characterList.add(charTemp);
+				characterList.equals(input.readObject());
+				charTemp = characterList.get(0);
+				System.out.println("NO");
 			//}
 			
 			int counter = 0;
-			Label gridLabel = new Label(""); 
-			for (int i = 0; i < characterList.size() / 3; i++) { 
+			Label gridLabel = new Label(charTemp.toString()); 
+			/*for (int i = 0; i < characterList.size() / 3; i++) { 
 				for (int c = 0; c < 2; c++) {
 					String temp = characterList.get(counter).toString();
 					gridLabel.setText(temp);
@@ -42,7 +43,9 @@ public class CharacterWindow extends Pane {
 					charGP.setColumnIndex(gridLabel, i);
 					counter++;
 				}
-			}
+			}*/
+			charGP.getChildren().add(gridLabel);
+			this.getChildren().add(charGP);
 		}
 		catch (EOFException ex) {
 			System.out.println("nope");

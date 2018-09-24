@@ -48,9 +48,10 @@ public class NewCharacterWindow extends Pane {
 			int strain = Integer.parseInt(strainTF.getText());
 			int soak = Integer.parseInt(soakTF.getText());
 			double credits = Double.parseDouble(creditsTF.getText());
+			Characters newChar = new Characters(name, wound, strain, soak, credits);
 			
 			ArrayList<Characters> characterList = new ArrayList<Characters>();
-			characterList.add(new Characters(name, wound, strain, soak, credits));
+			characterList.add(newChar);
 			
 			File characterFile = new File("SavedCharacters.dat");
 			try {

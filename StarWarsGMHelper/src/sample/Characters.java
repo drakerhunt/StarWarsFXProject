@@ -20,11 +20,11 @@ public class Characters implements Serializable {
 
     //Constructor with arguments
     public Characters(String name, int wounds, int strain, int soak, double credits) {
-        charName = name;
-        wounds = wounds;
-        strain = strain;
-        soak = soak;
-        credits = credits;
+        this.charName = name;
+        this.wounds = wounds;
+        this.strain = strain;
+        this.soak = soak;
+        this.credits = credits;
     }
 
     //CharName Methods
