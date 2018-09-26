@@ -132,7 +132,42 @@ public class Main extends Application {
             characterHB.getChildren().clear();
             characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);
         });
+        
+        //Select Buttons
         char1Btn.setOnAction(e -> {
+            try {
+                CharacterWindow cW = new CharacterWindow();
+                characterHB.getChildren().clear();
+                characterHB.getChildren().addAll(cW);
+            }
+            catch (Exception ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        });
+        
+        char2Btn.setOnAction(e -> {
+            try {
+                CharacterWindow cW = new CharacterWindow();
+                characterHB.getChildren().clear();
+                characterHB.getChildren().addAll(cW);
+            }
+            catch (Exception ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        });
+        
+        char3Btn.setOnAction(e -> {
+            try {
+                CharacterWindow cW = new CharacterWindow();
+                characterHB.getChildren().clear();
+                characterHB.getChildren().addAll(cW);
+            }
+            catch (Exception ex) {
+                System.out.println("Error: " + ex.getMessage());
+            }
+        });
+        
+        char4Btn.setOnAction(e -> {
             try {
                 CharacterWindow cW = new CharacterWindow();
                 characterHB.getChildren().clear();

@@ -17,6 +17,12 @@ public class CharacterWindow extends Pane {
 	
 	ArrayList<Characters> characterList = new ArrayList<Characters>();
 	
+	ArrayList<VBox> vbList = new ArrayList<VBox>();
+	
+	ArrayList<Button> btnList = new ArrayList<Button>();
+	
+	ArrayList<Label> labelList = new ArrayList<Label>();
+	
 	public CharacterWindow() throws IOException, ClassNotFoundException {
 		
 		GridPane charGP = new GridPane();
@@ -31,21 +37,14 @@ public class CharacterWindow extends Pane {
 			Characters charTemp = new Characters();
 			characterList = (ArrayList<Characters>)(input.readObject());
 			
-			//charTemp = characterList.get(0);
-			System.out.println("NO");
 			
-			ArrayList<VBox> vbList = new ArrayList<VBox>();
-			
-			ArrayList<Button> btnList = new ArrayList<Button>();
-			
-			ArrayList<Label> labelList = new ArrayList<Label>();
 			int counter = 0; 
 			System.out.println(characterList.size());
+			double n1 = characterList.size();
 			
 			if (characterList.size() > 3) {
-				for (int i = 0; i < characterList.size() / 3; i++) {
-					System.out.println(characterList.size()); 
-					for (int c = 0; c < 2; c++) {
+				for (int i = 0; i < n1 / 3; i++) {
+					for (int c = 0; c < 3; c++) {
 						Label gridLabel = new Label(characterList.get(counter).toString());
 						labelList.add(gridLabel);
 						
@@ -57,9 +56,12 @@ public class CharacterWindow extends Pane {
 						vbList.add(charWinVB);
 						
 						charGP.getChildren().add(vbList.get(counter));
-						charGP.setRowIndex(vbList.get(counter), c);
-						charGP.setColumnIndex(vbList.get(counter), i);
+						charGP.setConstraints(vbList.get(counter), c, i);
 						counter++;
+						
+						if (counter == characterList.size()) {
+							break;
+						}
 					}
 				}
 			}
@@ -78,10 +80,13 @@ public class CharacterWindow extends Pane {
 					
 					
 					charGP.getChildren().add(vbList.get(counter));
-					//charGP.setRowIndex(labelList.get(counter), c);
 					charGP.setColumnIndex(vbList.get(counter), i);
 					counter++;
 				}
+			}
+			
+			for (int i = 0; i < btnList.size(); i++) {
+				addChar(btnList.get(i), i);
 			}
 			
 			input.close();
@@ -91,4 +96,29 @@ public class CharacterWindow extends Pane {
 			System.out.println("nope");
 		}
 	}
+	
+	public void addChar(Button b, int i) {
+		b.setOnAction(e -> {
+			try {
+				
+				SelectedCharPane sChar = new SelectedCharPane(i);
+				ArrayList<SelectedCharPane> sCharList = new ArrayList<SelectedCharPane>();
+				sCharList.add(sChar);
+				
+				File file = new File("selectedCharPane.dat");
+				if (!file.exists()) {
+					ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("selectedCharPaneList.dat"));
+					out.writeObject(sCharList);
+				}
+				else {
+					ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("selectedCharPaneList.dat", true));
+					out.writeObject(sCharList);
+				}
+			}
+			catch (Exception ex) {
+				System.out.println("CharacterWindow.java:106");
+			}
+		});
+	}
+	
 }
