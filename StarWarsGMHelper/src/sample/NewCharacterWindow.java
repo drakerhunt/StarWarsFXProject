@@ -50,17 +50,29 @@ public class NewCharacterWindow extends Pane {
 			double credits = Double.parseDouble(creditsTF.getText());
 			Characters newChar = new Characters(name, wound, strain, soak, credits);
 			
-			ArrayList<Characters> characterList = new ArrayList<Characters>();
-			characterList.add(newChar);
+			ArrayList<Characters> characterList = new ArrayList<Characters>(); 
 			
 			File characterFile = new File("SavedCharacters.dat");
 			try {
-				//if (!characterFile.exists()) {
-					ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(characterFile));
-					output.writeObject(characterList);
-				//}
+				
+				if (characterFile.exists()) {
+				//read in the list and add to it
+					ObjectInputStream input = new ObjectInputStream(new FileInputStream("SavedCharacters.dat"));
+					characterList = (ArrayList<Characters>)(input.readObject());
+					characterList.add(newChar);
+					input.close();
+				}
+				else {
+					characterList.add(newChar);
+				}
+				
+				//write out the list
+				ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("SavedCharacters.dat"));
+				output.writeObject(characterList);
+				output.close();
+				
 			}
-			catch (IOException ex) {
+			catch (Exception ex) {
 				System.out.println("Did not save!");
 			}
 		});

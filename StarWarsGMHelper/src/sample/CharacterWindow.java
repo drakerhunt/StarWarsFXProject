@@ -15,36 +15,76 @@ import java.util.ArrayList;
 
 public class CharacterWindow extends Pane {
 	
+	ArrayList<Characters> characterList = new ArrayList<Characters>();
+	
 	public CharacterWindow() throws IOException, ClassNotFoundException {
 		
 		GridPane charGP = new GridPane();
 		charGP.setGridLinesVisible(true);
+		charGP.setHgap(10);
+		charGP.setVgap(10);
 		
 		try {
 			File characterFile = new File("SavedCharacters.dat");
-			ObjectInputStream input = new ObjectInputStream(new FileInputStream(characterFile));
+			ObjectInputStream input = new ObjectInputStream(new FileInputStream("SavedCharacters.dat"));
 			
-			ArrayList<Characters> characterList = new ArrayList<Characters>();
-			//while (true) {
-				Characters charTemp = new Characters();
-				characterList.equals(input.readObject());
-				charTemp = characterList.get(0);
-				System.out.println("NO");
-			//}
+			Characters charTemp = new Characters();
+			characterList = (ArrayList<Characters>)(input.readObject());
 			
-			int counter = 0;
-			Label gridLabel = new Label(charTemp.toString()); 
-			/*for (int i = 0; i < characterList.size() / 3; i++) { 
-				for (int c = 0; c < 2; c++) {
-					String temp = characterList.get(counter).toString();
-					gridLabel.setText(temp);
-					charGP.getChildren().add(gridLabel);
-					charGP.setRowIndex(gridLabel, c);
-					charGP.setColumnIndex(gridLabel, i);
+			//charTemp = characterList.get(0);
+			System.out.println("NO");
+			
+			ArrayList<VBox> vbList = new ArrayList<VBox>();
+			
+			ArrayList<Button> btnList = new ArrayList<Button>();
+			
+			ArrayList<Label> labelList = new ArrayList<Label>();
+			int counter = 0; 
+			System.out.println(characterList.size());
+			
+			if (characterList.size() > 3) {
+				for (int i = 0; i < characterList.size() / 3; i++) {
+					System.out.println(characterList.size()); 
+					for (int c = 0; c < 2; c++) {
+						Label gridLabel = new Label(characterList.get(counter).toString());
+						labelList.add(gridLabel);
+						
+						Button selectBtn = new Button("Select");
+						btnList.add(selectBtn);
+						
+						VBox charWinVB = new VBox();
+						charWinVB.getChildren().addAll(labelList.get(counter), btnList.get(counter));
+						vbList.add(charWinVB);
+						
+						charGP.getChildren().add(vbList.get(counter));
+						charGP.setRowIndex(vbList.get(counter), c);
+						charGP.setColumnIndex(vbList.get(counter), i);
+						counter++;
+					}
+				}
+			}
+			else {
+				for (int i = 0; i < characterList.size(); i++) {
+					System.out.println(characterList.size());
+					Label gridLabel = new Label(characterList.get(counter).toString());
+					labelList.add(gridLabel);
+					
+					Button selectBtn = new Button("Select");
+					btnList.add(selectBtn);
+					
+					VBox charWinVB = new VBox();
+					charWinVB.getChildren().addAll(labelList.get(counter), btnList.get(counter));
+					vbList.add(charWinVB);
+					
+					
+					charGP.getChildren().add(vbList.get(counter));
+					//charGP.setRowIndex(labelList.get(counter), c);
+					charGP.setColumnIndex(vbList.get(counter), i);
 					counter++;
 				}
-			}*/
-			charGP.getChildren().add(gridLabel);
+			}
+			
+			input.close();
 			this.getChildren().add(charGP);
 		}
 		catch (EOFException ex) {

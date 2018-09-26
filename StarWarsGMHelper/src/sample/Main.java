@@ -118,7 +118,7 @@ public class Main extends Application {
 
         //Set Scene
         Scene mainScene = new Scene(pane, width, height);
-        //primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Star Wars GM Helper");
         primaryStage.setScene(mainScene);
         primaryStage.show();
@@ -141,12 +141,6 @@ public class Main extends Application {
             catch (Exception ex) {
                 System.out.println("Error: " + ex.getMessage());
             }
-            /*catch (IOException ex) {
-                System.out.println("IOException");
-            }
-            catch (ClassNotFoundException exe) {
-                System.out.println("ClassNotFoundException");
-            }*/
         });
     }
 
