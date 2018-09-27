@@ -144,10 +144,10 @@ public class Main extends Application {
         charVB4.setPrefWidth(width / 4);
 
         //Add character labels to character panes
-        charVB1.getChildren().addAll(charCB1, char1Btn);
-        charVB2.getChildren().addAll(charCB2, char2Btn);
-        charVB3.getChildren().addAll(charCB3, char3Btn);
-        charVB4.getChildren().addAll(charCB4, char4Btn);
+        charVB1.getChildren().addAll(charCB1);
+        charVB2.getChildren().addAll(charCB2);
+        charVB3.getChildren().addAll(charCB3);
+        charVB4.getChildren().addAll(charCB4);
         
         //Adding nodes to panes and setting alignment
         characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);

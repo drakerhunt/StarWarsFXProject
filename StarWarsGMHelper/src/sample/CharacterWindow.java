@@ -48,9 +48,6 @@ public class CharacterWindow extends Pane {
 						Label gridLabel = new Label(characterList.get(counter).toString());
 						labelList.add(gridLabel);
 						
-						Button selectBtn = new Button("Select");
-						btnList.add(selectBtn);
-						
 						VBox charWinVB = new VBox();
 						charWinVB.getChildren().addAll(labelList.get(counter), btnList.get(counter));
 						vbList.add(charWinVB);
@@ -70,9 +67,6 @@ public class CharacterWindow extends Pane {
 					System.out.println(characterList.size());
 					Label gridLabel = new Label(characterList.get(counter).toString());
 					labelList.add(gridLabel);
-					
-					Button selectBtn = new Button("Select");
-					btnList.add(selectBtn);
 					
 					VBox charWinVB = new VBox();
 					charWinVB.getChildren().addAll(labelList.get(counter), btnList.get(counter));
