@@ -105,7 +105,7 @@ public class CharacterWindow extends Pane {
 				ArrayList<SelectedCharPane> sCharList = new ArrayList<SelectedCharPane>();
 				sCharList.add(sChar);
 				
-				File file = new File("selectedCharPane.dat");
+				File file = new File("selectedCharPaneList.dat");
 				if (!file.exists()) {
 					ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("selectedCharPaneList.dat"));
 					out.writeObject(sCharList);

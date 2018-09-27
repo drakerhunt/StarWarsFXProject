@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.geometry.Pos;
 import java.io.*;
@@ -19,7 +20,7 @@ public class SelectedCharPane extends Pane {
 	private int wounds, strain, soak;
 	private double credits;
 	
-	VBox mainVB = new VBox();
+	VBox mainVB = new VBox(10);
 	
 	//charName
 	HBox nameHB = new HBox();
@@ -49,8 +50,9 @@ public class SelectedCharPane extends Pane {
 	ObjectInputStream input; 
 	
 	public SelectedCharPane(int i) throws IOException, ClassNotFoundException {
-		this.input = new ObjectInputStream(new FileInputStream("SavedCharacter.dat"));
+		this.input = new ObjectInputStream(new FileInputStream("SavedCharacters.dat"));
 		this.charList = (ArrayList<Characters>)(input.readObject());
+		input.close();
 		
 		this.name = charList.get(i).getCharName();
 		this.wounds = charList.get(i).getWounds();
@@ -61,25 +63,26 @@ public class SelectedCharPane extends Pane {
 		this.nameLb.setText("Name: " + this.name);
 		this.nameHB.getChildren().addAll(this.nameLb);
 		
-		this.woundsLb.setText("Wound Threshold: ");
-		this.woundsTF.setText(this.wounds + "");
+		this.woundsLb.setText("Wound Threshold: " + this.wounds);
+		this.woundsTF.setText("0");
 		this.woundsHB.getChildren().addAll(this.woundsLb, this.woundsTF);
 		
-		this.strainLb.setText("Strain Threshold: ");
-		this.strainTF.setText(this.strain + "");
+		this.strainLb.setText("Strain Threshold: " + this.strain);
+		this.strainTF.setText("0");
 		this.strainHB.getChildren().addAll(this.strainLb, this.strainTF);
 		
-		this.soakLb.setText("Soak: ");
-		this.soakTF.setText(this.soak + "");
+		this.soakLb.setText("Soak: " + this.soak);
+		//this.soakTF.setText("0");
 		this.soakHB.getChildren().addAll(this.soakLb, this.soakTF);
 		
 		this.creditsLB.setText("Credits: ");
 		this.creditsTF.setText(this.credits + "");
 		this.creditsHB.getChildren().addAll(this.creditsLB, this.creditsTF);
 		
-		this.mainVB.getChildren().addAll(this.nameHB, this.woundsHB, this.strainHB, this.soakHB, this.creditsHB);
+		this.mainVB.getChildren().addAll(this.nameHB, this.woundsLb, this.woundsTF, this.strainLb, this.strainTF, this.soakLb, this.creditsLB, this.creditsTF);
 		
 		this.getChildren().add(this.mainVB);
+		this.setWidth(700 / 4 - 10);
 	}
 	
 }

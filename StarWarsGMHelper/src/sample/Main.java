@@ -1,23 +1,29 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.geometry.Insets;
+import javafx.collections.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 import java.io.*;
 
 
 public class Main extends Application {
+    
+    ArrayList<String> charStringList = new ArrayList<String>();
+    ObservableList<String> charNameList = FXCollections.observableArrayList(charStringList);
+    int size1, size2 = 0;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -51,10 +57,47 @@ public class Main extends Application {
         //Buttons
         Button newCharButton = new Button("New Character");
         Button mainMenuBtn = new Button("Main Menu");
-        Button char1Btn = new Button("Select Character");
-        Button char2Btn = new Button("Select Character");
-        Button char3Btn = new Button("Select Character");
-        Button char4Btn = new Button("Select Character");
+        Button clearBtn = new Button("Clear");
+        Button char1Btn = new Button("See Character List");
+        Button char2Btn = new Button("See Character List");
+        Button char3Btn = new Button("See Character List");
+        Button char4Btn = new Button("See Character List");
+        
+        //ComboBox Observable List
+        
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream("SavedCharacters.dat"));
+            ArrayList<Characters> charList = new ArrayList<Characters>();
+            charList = (ArrayList<Characters>)in.readObject();
+            in.close();
+            for (int i = 0; i < charList.size(); i++) {
+                charStringList.add(charList.get(i).getCharName());
+            }
+        }
+        catch (Exception ex) {
+            System.out.println("COMBOBOX");
+        }
+        charNameList = FXCollections.observableArrayList(charStringList);
+        
+        //ComboBox for Character Selection
+        ComboBox charCB1 = new ComboBox(charNameList);
+        ComboBox charCB2 = new ComboBox(charNameList);
+        ComboBox charCB3 = new ComboBox(charNameList);
+        ComboBox charCB4 = new ComboBox(charNameList);
+        
+        //charCB1.getItems().addAll(charNameList);
+        
+        //Formatting ComboBox
+        charCB1.setPrefWidth(width / 4 - 15);
+        charCB2.setPrefWidth(width / 4 - 15);
+        charCB3.setPrefWidth(width / 4 - 15);
+        charCB4.setPrefWidth(width / 4 - 15);
+        
+        
+        charCB1.setValue("Characters");
+        charCB2.setValue("Characters");
+        charCB3.setValue("Characters");
+        charCB4.setValue("Characters");
         
         //Character panes
         VBox charVB1 = new VBox();
@@ -101,14 +144,14 @@ public class Main extends Application {
         charVB4.setPrefWidth(width / 4);
 
         //Add character labels to character panes
-        charVB1.getChildren().addAll(charLabel1, char1Btn);
-        charVB2.getChildren().addAll(charLabel2, char2Btn);
-        charVB3.getChildren().addAll(charLabel3, char3Btn);
-        charVB4.getChildren().addAll(charLabel4, char4Btn);
+        charVB1.getChildren().addAll(charCB1, char1Btn);
+        charVB2.getChildren().addAll(charCB2, char2Btn);
+        charVB3.getChildren().addAll(charCB3, char3Btn);
+        charVB4.getChildren().addAll(charCB4, char4Btn);
         
         //Adding nodes to panes and setting alignment
         characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);
-        buttonHB.getChildren().addAll(newCharButton, mainMenuBtn);
+        buttonHB.getChildren().addAll(newCharButton, mainMenuBtn, clearBtn);
         pane.setTop(titlePane);
         pane.setCenter(characterHB);
         pane.setBottom(buttonHB);
@@ -129,8 +172,36 @@ public class Main extends Application {
             characterHB.getChildren().addAll(nCWindow);
         });
         mainMenuBtn.setOnAction(e -> {
+            
             characterHB.getChildren().clear();
             characterHB.getChildren().addAll(charVB1, charVB2, charVB3, charVB4);
+            
+            
+            try {
+                ObjectInputStream in = new ObjectInputStream(new FileInputStream("SavedCharacters.dat"));
+                ArrayList<Characters> charList = new ArrayList<Characters>();
+                charList.clear();
+                charNameList.clear();
+                charStringList.clear();
+                charList = (ArrayList<Characters>)in.readObject();
+                in.close();
+                for (int i = 0; i < charList.size(); i++) {
+                    charStringList.add(charList.get(i).getCharName());
+                }
+                charNameList = FXCollections.observableArrayList(charStringList);
+                charCB1.setItems(charNameList);
+                charCB2.setItems(charNameList);
+                charCB3.setItems(charNameList);
+                charCB4.setItems(charNameList);
+                
+                charCB1.setValue("Characters");
+                charCB2.setValue("Characters");
+                charCB3.setValue("Characters");
+                charCB4.setValue("Characters");
+            }
+            catch (Exception ex) {
+                System.out.println("MAIN");
+            }
         });
         
         //Select Buttons
@@ -175,6 +246,61 @@ public class Main extends Application {
             }
             catch (Exception ex) {
                 System.out.println("Error: " + ex.getMessage());
+            }
+        });
+        
+        //Clear Button
+        clearBtn.setOnAction(e -> {
+            charVB1.getChildren().clear();
+            charVB2.getChildren().clear();
+            charVB3.getChildren().clear();
+            charVB4.getChildren().clear();
+            
+            charVB1.getChildren().addAll(charCB1, char1Btn);
+            charVB2.getChildren().addAll(charCB2, char2Btn);
+            charVB3.getChildren().addAll(charCB3, char3Btn);
+            charVB4.getChildren().addAll(charCB4, char4Btn);
+        });
+        
+        //ComboBox listeners
+        charCB1.setOnAction(e -> {
+            try {
+                SelectedCharPane sChar = new SelectedCharPane(charStringList.indexOf(charCB1.getValue()));
+                charVB1.getChildren().clear();
+                charVB1.getChildren().addAll(sChar);
+            }
+            catch (Exception ex) {
+                System.out.println("COMBOBOX1");
+            }
+        });
+        charCB2.setOnAction(e -> {
+            try {
+                SelectedCharPane sChar = new SelectedCharPane(charStringList.indexOf(charCB2.getValue()));
+                charVB2.getChildren().clear();
+                charVB2.getChildren().addAll(sChar);
+            }
+            catch (Exception ex) {
+                System.out.println("COMBOBOX2");
+            }
+        });
+        charCB3.setOnAction(e -> {
+            try {
+                SelectedCharPane sChar = new SelectedCharPane(charStringList.indexOf(charCB3.getValue()));
+                charVB3.getChildren().clear();
+                charVB3.getChildren().addAll(sChar);
+            }
+            catch (Exception ex) {
+                System.out.println("COMBOBOX3");
+            }
+        });
+        charCB4.setOnAction(e -> {
+            try {
+                SelectedCharPane sChar = new SelectedCharPane(charStringList.indexOf(charCB4.getValue()));
+                charVB4.getChildren().clear();
+                charVB4.getChildren().addAll(sChar);
+            }
+            catch (Exception ex) {
+                System.out.println("COMBOBOX4");
             }
         });
     }
